@@ -94,10 +94,9 @@ fun EditableBitmapCanvas(
                         }
 
                         val previousPoint = lastPoint ?: currentPoint
-                        val updated = bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
                         drawSmoothBrushStroke(
-                            targetBitmap = updated,
+                            targetBitmap = bitmap,
                             originalBitmap = originalBitmap,
                             start = previousPoint,
                             end = currentPoint,
@@ -108,7 +107,7 @@ fun EditableBitmapCanvas(
                             brushRadius = brushSize
                         )
 
-                        onBitmapChange(updated)
+                        onBitmapChange(bitmap)
                         lastPoint = currentPoint
                     }
                 },
