@@ -8,7 +8,9 @@ import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +23,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -36,6 +39,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
@@ -85,7 +91,14 @@ fun AddBackgroundScreen(
     ) {
         Text(
             text = "Add Background",
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.headlineMedium.copy(
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFF023890), // Blue
+                        Color(0xFF00BCD4)  // Cyan
+                    )
+                )
+            ),
             fontWeight = FontWeight.Bold
         )
 
@@ -93,10 +106,20 @@ fun AddBackgroundScreen(
 
         Button(
             onClick = { backgroundPickerLauncher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
+                .clip(RoundedCornerShape(25.dp))
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFF023890), // Blue
+                            Color(0xFF00BCD4)  // Cyan
+                        )
+                    )
+                ),
+            shape = RoundedCornerShape(25.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary,
-                contentColor = MaterialTheme.colorScheme.primary
+                containerColor = Color.Transparent,
+                contentColor = Color.White
             )
         ) {
             Text(
@@ -113,7 +136,17 @@ fun AddBackgroundScreen(
         ) {
             OutlinedButton(
                 onClick = { scale = (scale + 0.1f).coerceAtMost(3f) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f),
+                    shape = RoundedCornerShape(25.dp),
+                border = BorderStroke(
+                    1.dp,
+                    Color(0xFF023890)
+                ),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color(0xFF023890)
+                )
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.outline_zoom_in_24),
@@ -123,7 +156,16 @@ fun AddBackgroundScreen(
 
             OutlinedButton(
                 onClick = { scale = (scale - 0.1f).coerceAtLeast(0.3f) },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(25.dp),
+                border = BorderStroke(
+                    1.dp,
+                    Color(0xFF023890)
+                ),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color(0xFF023890)
+                )
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.outline_zoom_out_24),
@@ -137,7 +179,16 @@ fun AddBackgroundScreen(
                     offsetY = 0f
                     scale = 1f
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(25.dp),
+                border = BorderStroke(
+                    1.dp,
+                    Color(0xFF023890)
+                ),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color(0xFF023890)
+                )
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.outline_reset_image_24),
@@ -235,12 +286,23 @@ fun AddBackgroundScreen(
                     Toast.makeText(context, "Save failed", Toast.LENGTH_SHORT).show()
                 }
             },
-            modifier = Modifier.align(Alignment.End),
+            modifier = Modifier
+                .align(Alignment.End)
+                .clip(CircleShape)
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(
+                            Color(0xFF023890), // Blue
+                            Color(0xFF00BCD4)  // Cyan
+                        )
+                    )
+                ),
             shape = CircleShape,
             colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary,
-                contentColor = MaterialTheme.colorScheme.primary
-            )
+                containerColor = Color.Transparent,
+                contentColor = Color.White
+            ),
+            border = ButtonDefaults.outlinedButtonBorder(false)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.outline_download_24),

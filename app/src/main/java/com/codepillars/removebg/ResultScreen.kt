@@ -8,6 +8,9 @@ import android.graphics.BitmapFactory
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,6 +22,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -38,6 +42,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -137,7 +144,14 @@ fun ResultScreen(
 
         Text(
             text = "Background Edit",
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.headlineMedium.copy(
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        Color(0xFF023890), // Blue
+                        Color(0xFF00BCD4)  // Cyan
+                    )
+                )
+            ),
             fontWeight = FontWeight.Bold
         )
 
@@ -150,10 +164,23 @@ fun ResultScreen(
             ) {
                 OutlinedButton(
                     onClick = { editMode = EditMode.ERASE },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                    .clip(RoundedCornerShape(25.dp))
+                    .background(
+                        Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xFF023890), // Blue
+                                Color(0xFF00BCD4)  // Cyan
+                            )
+                        )
+                    ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                        contentColor = MaterialTheme.colorScheme.primary
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White,
+                    ),
+                    border = ButtonDefaults.outlinedButtonBorder(
+                        false
                     )
                 ) {
                     Icon(
@@ -164,10 +191,23 @@ fun ResultScreen(
 
                 OutlinedButton(
                     onClick = { editMode = EditMode.RESTORE },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                    .clip(RoundedCornerShape(25.dp))
+                    .background(
+                        Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xFF023890), // Blue
+                                Color(0xFF00BCD4)  // Cyan
+                            )
+                        )
+                    ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                        contentColor = MaterialTheme.colorScheme.primary
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White,
+                    ),
+                    border = ButtonDefaults.outlinedButtonBorder(
+                        false
                     )
                 ) {
                     Icon(
@@ -181,10 +221,23 @@ fun ResultScreen(
                         vm.setEditedBitmap(bitmap)
                         onNext()
                     },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f)
+                        .clip(RoundedCornerShape(25.dp))
+                        .background(
+                            Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFF023890), // Blue
+                                    Color(0xFF00BCD4)  // Cyan
+                                )
+                            )
+                        ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onPrimary,
-                        contentColor = MaterialTheme.colorScheme.primary
+                        containerColor = Color.Transparent,
+                        contentColor = Color.White,
+
+                    ),
+                    border = ButtonDefaults.outlinedButtonBorder(
+                        false
                     )
                 ) {
                     Icon(
@@ -203,7 +256,17 @@ fun ResultScreen(
                 OutlinedButton(
                     onClick = { undo() },
                     enabled = undoStack.isNotEmpty(),
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f),
+                    shape = RoundedCornerShape(25.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFF023890)
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color(0xFF023890)
+                    )
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_undo_24),
@@ -215,7 +278,16 @@ fun ResultScreen(
                 OutlinedButton(
                     onClick = { redo() },
                     enabled = redoStack.isNotEmpty(),
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(25.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFF023890)
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color(0xFF023890)
+                    )
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_redo_24),
@@ -227,7 +299,16 @@ fun ResultScreen(
                     onClick = {
                         foregroundScale = (foregroundScale + 0.1f).coerceAtMost(1.6f)
                     },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(25.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFF023890)
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color(0xFF023890)
+                    )
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_zoom_in_24),
@@ -239,7 +320,16 @@ fun ResultScreen(
                     onClick = {
                         foregroundScale = (foregroundScale - 0.1f).coerceAtLeast(0.6f)
                     },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(25.dp),
+                    border = BorderStroke(
+                        1.dp,
+                        Color(0xFF023890)
+                    ),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = Color(0xFF023890)
+                    )
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_zoom_out_24),
@@ -250,16 +340,19 @@ fun ResultScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Brush Size: ${brushSize.toInt()}")
+            Text(
+                "Brush Size: ${brushSize.toInt()}",
+                color = Color(0xFF023890)
+            )
 
             Slider(
                 value = brushSize,
                 onValueChange = { brushSize = it },
                 valueRange = 10f..80f,
                 colors = SliderDefaults.colors(
-                    thumbColor = MaterialTheme.colorScheme.onPrimary,
-                    activeTrackColor = MaterialTheme.colorScheme.primary,
-                    inactiveTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                    thumbColor = Color(0xFF00BCD4),
+                    activeTrackColor = Color(0xFF00BCD4),
+                    inactiveTrackColor = Color(0xFF023890)
                 )
             )
 
@@ -308,12 +401,23 @@ fun ResultScreen(
                         Toast.makeText(context, "Save failed", Toast.LENGTH_SHORT).show()
                     }
                 },
-                modifier = Modifier.align(Alignment.End),
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .clip(CircleShape)
+                    .background(
+                        Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xFF023890), // Blue
+                                Color(0xFF00BCD4)  // Cyan
+                            )
+                        )
+                    ),
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.onPrimary,
-                    contentColor = MaterialTheme.colorScheme.primary
-                )
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White
+                ),
+                border = ButtonDefaults.outlinedButtonBorder(false)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.outline_download_24),
@@ -325,7 +429,10 @@ fun ResultScreen(
             modifier = Modifier.fillMaxWidth().height(300.dp),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                color = Color(0xFF00BCD4), // Green
+                strokeWidth = 4.dp
+            )
         }
     }
 }
